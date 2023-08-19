@@ -1,36 +1,25 @@
-﻿@*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-    <div class="container">
-        <a class="navbar-brand" asp-area="" asp-page="/Index">LifeFuel</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-            <ul class="navbar-nav flex-grow-1">
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>*@
+﻿@{
+    var currentPage = Context.Request.Path;
+}
 
-
-<aside style="width: 250px; height: calc(100vh - 60px)" class="bg-danger p-3">
-    <a>LifeFluel</a>
+<aside style="width: 250px; height: calc(100vh - 60px)" class="sidebar p-3">
+    <a><i class="bi bi-0-circle me-2"></i>LifeFluel<i class="bi bi-person-circle"></i></a>
     <hr />
     <ul class="nav nav-pills flex-column">
         <li class="nav-item">
-            <a class="nav-link active" href="#">Active</a>
+            <a class="nav-link @(currentPage == "/" ? "active" : "")" asp-area="" asp-page="/Index"><i class="bi bi-house-fill me-2"></i>Dashboard</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="#"><i class="bi bi-calendar-week-fill me-2"></i>Daily report</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="#"><i class="bi bi-capsule me-2"></i>Nutrition</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#"><i class="bi bi-clipboard-check-fill me-2"></i>Habits</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link @(currentPage == "/Privacy" ? "active" : "")" asp-area="" asp-page="/Privacy"><i class="bi bi-droplet-fill me-2"></i>Hydration</a>
         </li>
     </ul>
 </aside>

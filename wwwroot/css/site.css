@@ -20,3 +20,7 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.sidebar {
+    box-shadow: 10px 0px 30px -10px rgba(210, 210, 210, 1);
+}
