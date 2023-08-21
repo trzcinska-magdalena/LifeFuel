@@ -24,3 +24,7 @@ body {
 .sidebar {
     box-shadow: 10px 0px 30px -10px rgba(210, 210, 210, 1);
 }
+
+.changeNav {
+    color: #EC9704;
+}
