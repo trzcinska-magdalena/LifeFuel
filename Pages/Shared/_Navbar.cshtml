@@ -13,11 +13,10 @@
     }
 }
 
-<aside style="width: 250px; height: calc(100vh - 60px)" class="sidebar p-3 position-relative @navSmallClass">
+<aside class="sidebar p-3 position-relative @navSmallClass">
     <a class="nav-link logo p-0">
         <i class="bi bi-0-circle"></i>
         <span class="ms-2">LifeFluel</span>
-        @*<i class="bi bi-person-circle"></i>*@
     </a>
     <hr />
     <ul class="nav nav-pills flex-column">
@@ -28,95 +27,36 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link @(currentPage == "/daily-raport" ? "active" : "")" asp-area="" asp-page="/DailyRaport">
                 <i class="bi bi-calendar-week-fill"></i>
                 <span class="ms-2">Daily report</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link @(currentPage == "/nutrition" ? "active" : "")" asp-area="" asp-page="/Nutrition">
                 <i class="bi bi-capsule"></i>
                 <span class="ms-2">Nutrition</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link @(currentPage == "/habits" ? "active" : "")" asp-area="" asp-page="/Habits">
                 <i class="bi bi-clipboard-check-fill"></i>
                 <span class="ms-2">Habits</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link @(currentPage == "/Privacy" ? "active" : "")" asp-area="" asp-page="/Privacy">
+            <a class="nav-link @(currentPage == "/hydration" ? "active" : "")" asp-area="" asp-page="/Hydration">
                 <i class="bi bi-droplet-fill"></i>
                 <span class="ms-2">Hydration</span>
             </a>
         </li>
     </ul>
 
-    
-    <i class="bi bi-arrow-left-circle-fill position-absolute changeNav" style="right: 15px; bottom: 15px; cursor: pointer" onclick="changeNavbar()"></i>
-    
-
-    
+    <i class="bi bi-arrow-left-circle-fill menu-toggle" onclick="toggleNavbarClass()"></i>
 </aside>
 
-<style>
-    .logo {
-        color: #9C4A1A;
-        font-size: 24px;
-        font-weight: 800;
-    }
-
-    .changeNav {
-        font-size: 24px;
-    }
-
-    .logo:hover {
-            color: #9C4A1A;
-    }
-
-    hr {
-        margin-top: 0.5rem;
-    }
-
-    .nav-small .logo {
-        display:block;
-        text-align: center;
-    }
-
-    aside {
-        transition: all .3s;
-        overflow: hidden;
-    }
-
-    
-
-    .nav-small {
-        width: 50px !important;
-        margin: 0;
-        padding: 1rem 0 0 0 !important;
-    }
-
-        .nav-small a i {
-            margin-right: 0;
-        }
-
-        .nav-small a span {
-            display: none;
-        }
-
-        .nav-small .changeNav {
-            transform: rotateY(3.142rad);
-        }
-
-    a {
-        white-space: nowrap;
-    }
-
-</style>
-
 <script>
-    function changeNavbar() {
+    function toggleNavbarClass() {
         let aside = document.getElementsByClassName('sidebar')[0];
         aside.classList.toggle("nav-small");
 
