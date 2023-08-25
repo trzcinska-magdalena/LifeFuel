@@ -1,0 +1,44 @@
+﻿// variables
+$primary-color: #EC9704;
+$secondary-color: #68904D;
+$logo-color: #9C4A1A;
+$header-text-color: #fff;
+
+$panel-other-bg-color: #f6f3f0;
+
+
+$text-font-size: 16px;
+$heading-font-size: 24px;
+
+
+
+// global
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+
+    @media (min-width: 768px) {
+        font-size: var(--text-font-size);
+    }
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+hr {
+    margin-top: 0.5rem;
+}
+
+a {
+    white-space: nowrap;
+}
+
+.font-size-small {
+    font-size: 0.8rem;
+}
+
+.font-size-medium {
+    font-size: 1.5rem;
+}
