@@ -106,3 +106,35 @@ aside.sidebar {
     width: 60%;
     height: 30%;
 }
+
+// Daily Rapoty
+.emoji {
+    font-size: 46px;
+    color: darken($panel-other-bg-color, 7%);
+    cursor: pointer;
+    margin: 0 20px;
+
+    &:hover {
+        color: $primary-color;
+    }
+}
+
+.emoji.checked {
+    color: $primary-color;
+}
+
+.symptom {
+    background-color: darken($panel-other-bg-color, 5%);
+    cursor: pointer;
+    margin: 0 10px;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+
+    &:hover {
+        background-color: $primary-color;
+    }
+}
+
+.symptom.checked {
+    background-color: $primary-color;
+}

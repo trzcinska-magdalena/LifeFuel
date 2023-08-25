@@ -125,6 +125,35 @@ aside.sidebar .menu-toggle {
   height: 30%;
 }
 
+.emoji {
+  font-size: 46px;
+  color: #e9e1da;
+  cursor: pointer;
+  margin: 0 20px;
+}
+.emoji:hover {
+  color: #EC9704;
+}
+
+.emoji.checked {
+  color: #EC9704;
+}
+
+.symptom {
+  background-color: #ece6e0;
+  cursor: pointer;
+  margin: 0 10px;
+  padding: 5px 10px;
+  font-size: 0.9rem;
+}
+.symptom:hover {
+  background-color: #EC9704;
+}
+
+.symptom.checked {
+  background-color: #EC9704;
+}
+
 .flex {
   display: flex;
   flex-direction: column;
