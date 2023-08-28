@@ -42,3 +42,19 @@ a {
 .font-size-medium {
     font-size: 1.5rem;
 }
+
+
+
+.form-range:focus::-webkit-slider-thumb,
+.form-range:focus::-moz-range-thumb,
+.form-range:focus::-ms-thumb {
+    outline: none;
+    box-shadow: none;
+}
+
+.form-range::-webkit-slider-thumb:focus,
+.form-range::-moz-range-thumb:focus,
+.form-range::-ms-thumb:focus {
+    outline: none;
+    box-shadow: none;
+}

@@ -4,72 +4,75 @@
     ViewData["Title"] = "LifeFuel - home";
 }
 
-<div class="row">
-    <div class="col-12 col-md-4 py-2 px-3 panel panel-2-main flex">
-        Hi [NAME],  
-        <h4>Welcome back!</h4>
+<div class="container my-auto">
+    <div class="row">
+        <div class="col-12 col-md-4 py-2 px-3 panel panel-2-main flex">
+            Hi [NAME],  
+            <h4>Welcome back!</h4>
+        </div>
+        <div class="col-12 col-md-4 py-2 px-3 panel panel-2-main flex">
+            [DAY] Day Streak
+        </div>
+        <div class="col-12 col-md-4 py-2 px-3 panel panel-2-main flex">
+            Today is @DateTime.Now.ToString("dd.MM.yyyy")
+        </div>
     </div>
-    <div class="col-12 col-md-4 py-2 px-3 panel panel-2-main flex">
-        [DAY] Day Streak
+
+    <div class="row">
+        <div class="col-6 col-md-3 py-4 px-3 panel panel-other flex align-items-center">
+            <div class="circular-progress mb-5 flex">
+                <span div class="progress-value">
+                    <span class="progress-value-percent">0<sup class="font-size-small">%</sup></span>             
+                    <span style="margin-top: -10px" class="font-size-small d-block">today</span>
+                </span>
+            </div>
+
+            <div class="water-balance-box w-100">
+                <div class="chartBox-bar">
+                    <canvas id="water-ballance"></canvas>
+                </div>
+
+                <span class="font-size-small d-block my-2">Water Balance</span>
+                <span class="font-size-medium" style="font-weight: 700;">2.5 </span><sub class="font-size-small">litres / day</sub>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-3 p-0 flex">
+            <div class="col-12 py-5 px-3 panel panel-other" style="height: 50%;">
+                <div class="chartBox-bar">
+                    <canvas id="active-ballance"></canvas>
+                </div>
+                <span class="font-size-small d-block my-2">Activity</span>
+                <span class="font-size-medium" style="font-weight: 700;">31 </span><sub class="font-size-small">min / day</sub>
+            </div>
+            <div class="col-12 py-5 px-3 panel panel-other" style="height: 50%;">
+                <div class="chartBox-bar">
+                    <canvas id="sleep-ballance"></canvas>
+                </div>
+                <span class="font-size-small d-block my-2">Sleep</span>
+                <span class="font-size-medium" style="font-weight: 700;">7.3 </span><sub class="font-size-small">hours / day</sub>
+            </div>
+
+        </div>
+
+        <div class="col-12 col-md-6 py-4 px-3 panel panel-other flex">
+            habits
+
+            avg per week
+            week graph
+        </div>
     </div>
-    <div class="col-12 col-md-4 py-2 px-3 panel panel-2-main flex">
-        Today is @DateTime.Now.ToString("dd.MM.yyyy")
+
+    <div class="row">
+        <div class="col-12 col-md-4 py-4 px-3 panel panel-other flex">
+            remainders
+        </div>
+        <div class="col-12 col-md-8 py-4 px-3 panel panel-other flex">
+            notes
+        </div>
     </div>
 </div>
 
-<div class="row">
-    <div class="col-6 col-md-3 py-4 px-3 panel panel-other flex align-items-center">
-        <div class="circular-progress mb-5 flex">
-            <span div class="progress-value">
-                <span class="progress-value-percent">0<sup class="font-size-small">%</sup></span>             
-                <span style="margin-top: -10px" class="font-size-small d-block">today</span>
-            </span>
-        </div>
-
-        <div class="water-balance-box w-100">
-            <div class="chartBox-bar">
-                <canvas id="water-ballance"></canvas>
-            </div>
-
-            <span class="font-size-small d-block my-2">Water Balance</span>
-            <span class="font-size-medium" style="font-weight: 700;">2.5 </span><sub class="font-size-small">litres / day</sub>
-        </div>
-    </div>
-
-    <div class="col-6 col-md-3 p-0 flex">
-        <div class="col-12 py-5 px-3 panel panel-other" style="height: 50%;">
-            <div class="chartBox-bar">
-                <canvas id="active-ballance"></canvas>
-            </div>
-            <span class="font-size-small d-block my-2">Activity</span>
-            <span class="font-size-medium" style="font-weight: 700;">31 </span><sub class="font-size-small">min / day</sub>
-        </div>
-        <div class="col-12 py-5 px-3 panel panel-other" style="height: 50%;">
-            <div class="chartBox-bar">
-                <canvas id="sleep-ballance"></canvas>
-            </div>
-            <span class="font-size-small d-block my-2">Sleep</span>
-            <span class="font-size-medium" style="font-weight: 700;">7.3 </span><sub class="font-size-small">hours / day</sub>
-        </div>
-
-    </div>
-
-    <div class="col-12 col-md-6 py-4 px-3 panel panel-other flex">
-        habits
-
-        avg per week
-        week graph
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12 col-md-4 py-4 px-3 panel panel-other flex">
-        remainders
-    </div>
-    <div class="col-12 col-md-8 py-4 px-3 panel panel-other flex">
-        notes
-    </div>
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
