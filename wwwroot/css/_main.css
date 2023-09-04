@@ -19,6 +19,13 @@ hr {
 
 a {
   white-space: nowrap;
+  color: #413427;
+  text-decoration: none;
+  display: block;
+}
+
+a:hover {
+  color: #9C4A1A;
 }
 
 .font-size-small {
@@ -148,7 +155,6 @@ aside.sidebar .menu-toggle {
 .emoji:hover {
   color: #EC9704;
 }
-
 .emoji.checked {
   color: #EC9704;
 }
@@ -163,7 +169,6 @@ aside.sidebar .menu-toggle {
 .symptom:hover {
   background-color: #EC9704;
 }
-
 .symptom.checked {
   background-color: #EC9704;
 }
@@ -171,6 +176,15 @@ aside.sidebar .menu-toggle {
 .range-value {
   font-size: 1.5rem;
   margin-left: 10px;
+}
+
+.intro-section {
+  background-color: #EC9704;
+}
+.intro-section section {
+  font-size: 1.1rem;
+  letter-spacing: 1.2px;
+  line-height: 1.5rem;
 }
 
 .flex {

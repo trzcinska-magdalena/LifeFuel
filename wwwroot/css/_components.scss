@@ -117,11 +117,12 @@ aside.sidebar {
     &:hover {
         color: $primary-color;
     }
+
+    &.checked {
+        color: $primary-color;
+    }
 }
 
-.emoji.checked {
-    color: $primary-color;
-}
 
 .symptom {
     background-color: darken($panel-other-bg-color, 5%);
@@ -133,10 +134,10 @@ aside.sidebar {
     &:hover {
         background-color: $primary-color;
     }
-}
 
-.symptom.checked {
-    background-color: $primary-color;
+    &.checked {
+        background-color: $primary-color;
+    }
 }
 
 .range-value {
@@ -144,3 +145,13 @@ aside.sidebar {
     margin-left: 10px;
 }
 
+
+.intro-section {
+    background-color: $primary-color;
+
+    section {
+        font-size: 1.1rem;
+        letter-spacing: 1.2px;
+        line-height: 1.5rem;
+    }
+}

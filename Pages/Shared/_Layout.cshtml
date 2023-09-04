@@ -14,7 +14,11 @@
 
 </head>
 <body class="d-flex align-items-stretch">
-    <partial name="_Navbar"/>
+
+    @if(User.Identity.IsAuthenticated)
+    {
+        <partial name="_Navbar" />
+    }
 
     @RenderBody()
 
