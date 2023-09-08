@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LifeFuel.Migrations
 {
     [DbContext(typeof(LifeFuelContext))]
-    [Migration("20230904124202_addIdentity")]
-    partial class addIdentity
+    [Migration("20230906114912_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,116 @@ namespace LifeFuel.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("LifeFuel.Models.DailyReport", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Energy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FeelId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Hunger")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SymptomId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserProfileId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FeelId");
+
+                    b.HasIndex("SymptomId");
+
+                    b.HasIndex("UserProfileId");
+
+                    b.ToTable("DailyReports");
+                });
+
+            modelBuilder.Entity("LifeFuel.Models.DailyReportSymptom", b =>
+                {
+                    b.Property<int>("DailyReportId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SymptomId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DailyReportId", "SymptomId");
+
+                    b.HasIndex("SymptomId");
+
+                    b.ToTable("DailyReportSymptom");
+                });
+
+            modelBuilder.Entity("LifeFuel.Models.Feel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Feels");
+                });
+
+            modelBuilder.Entity("LifeFuel.Models.Symptom", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Symptoms");
+                });
+
+            modelBuilder.Entity("LifeFuel.Models.UserProfile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserProfiles");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -89,6 +199,10 @@ namespace LifeFuel.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -140,6 +254,10 @@ namespace LifeFuel.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -227,6 +345,70 @@ namespace LifeFuel.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("LifeFuel.Models.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
+                });
+
+            modelBuilder.Entity("LifeFuel.Models.DailyReport", b =>
+                {
+                    b.HasOne("LifeFuel.Models.Feel", "Feel")
+                        .WithMany("DailyReports")
+                        .HasForeignKey("FeelId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("LifeFuel.Models.Symptom", "Symptom")
+                        .WithMany()
+                        .HasForeignKey("SymptomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LifeFuel.Models.UserProfile", "UserProfile")
+                        .WithMany("DailyReports")
+                        .HasForeignKey("UserProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Feel");
+
+                    b.Navigation("Symptom");
+
+                    b.Navigation("UserProfile");
+                });
+
+            modelBuilder.Entity("LifeFuel.Models.DailyReportSymptom", b =>
+                {
+                    b.HasOne("LifeFuel.Models.DailyReport", "DailyReport")
+                        .WithMany("DailyReportSymptoms")
+                        .HasForeignKey("DailyReportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("LifeFuel.Models.Symptom", "Symptom")
+                        .WithMany("DailyReportSymptoms")
+                        .HasForeignKey("SymptomId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DailyReport");
+
+                    b.Navigation("Symptom");
+                });
+
+            modelBuilder.Entity("LifeFuel.Models.UserProfile", b =>
+                {
+                    b.HasOne("LifeFuel.Models.ApplicationUser", "User")
+                        .WithOne("UserProfile")
+                        .HasForeignKey("LifeFuel.Models.UserProfile", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -275,6 +457,32 @@ namespace LifeFuel.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("LifeFuel.Models.DailyReport", b =>
+                {
+                    b.Navigation("DailyReportSymptoms");
+                });
+
+            modelBuilder.Entity("LifeFuel.Models.Feel", b =>
+                {
+                    b.Navigation("DailyReports");
+                });
+
+            modelBuilder.Entity("LifeFuel.Models.Symptom", b =>
+                {
+                    b.Navigation("DailyReportSymptoms");
+                });
+
+            modelBuilder.Entity("LifeFuel.Models.UserProfile", b =>
+                {
+                    b.Navigation("DailyReports");
+                });
+
+            modelBuilder.Entity("LifeFuel.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("UserProfile")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

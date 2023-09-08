@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LifeFuel.Migrations
 {
     /// <inheritdoc />
-    public partial class addIdentity : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,6 +30,7 @@ namespace LifeFuel.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -48,6 +49,32 @@ namespace LifeFuel.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Feels",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Feels", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Symptoms",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Symptoms", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -156,6 +183,86 @@ namespace LifeFuel.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "UserProfiles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserProfiles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserProfiles_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DailyReports",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserProfileId = table.Column<int>(type: "int", nullable: false),
+                    FeelId = table.Column<int>(type: "int", nullable: false),
+                    Energy = table.Column<int>(type: "int", nullable: false),
+                    Hunger = table.Column<int>(type: "int", nullable: false),
+                    SymptomId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DailyReports", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DailyReports_Feels_FeelId",
+                        column: x => x.FeelId,
+                        principalTable: "Feels",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_DailyReports_Symptoms_SymptomId",
+                        column: x => x.SymptomId,
+                        principalTable: "Symptoms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DailyReports_UserProfiles_UserProfileId",
+                        column: x => x.UserProfileId,
+                        principalTable: "UserProfiles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DailyReportSymptom",
+                columns: table => new
+                {
+                    DailyReportId = table.Column<int>(type: "int", nullable: false),
+                    SymptomId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DailyReportSymptom", x => new { x.DailyReportId, x.SymptomId });
+                    table.ForeignKey(
+                        name: "FK_DailyReportSymptom_DailyReports_DailyReportId",
+                        column: x => x.DailyReportId,
+                        principalTable: "DailyReports",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DailyReportSymptom_Symptoms_SymptomId",
+                        column: x => x.SymptomId,
+                        principalTable: "Symptoms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -194,6 +301,32 @@ namespace LifeFuel.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DailyReports_FeelId",
+                table: "DailyReports",
+                column: "FeelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DailyReports_SymptomId",
+                table: "DailyReports",
+                column: "SymptomId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DailyReports_UserProfileId",
+                table: "DailyReports",
+                column: "UserProfileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DailyReportSymptom_SymptomId",
+                table: "DailyReportSymptom",
+                column: "SymptomId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserProfiles_UserId",
+                table: "UserProfiles",
+                column: "UserId",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -215,7 +348,22 @@ namespace LifeFuel.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "DailyReportSymptom");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "DailyReports");
+
+            migrationBuilder.DropTable(
+                name: "Feels");
+
+            migrationBuilder.DropTable(
+                name: "Symptoms");
+
+            migrationBuilder.DropTable(
+                name: "UserProfiles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
