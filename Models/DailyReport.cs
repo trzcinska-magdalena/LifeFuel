@@ -15,7 +15,6 @@ namespace LifeFuel.Models
         public int Hunger { get; set; }
         public virtual ICollection<DailyReportSymptom> DailyReportSymptoms { get; set; } = new List<DailyReportSymptom>();
         public virtual Feel Feel { get; set; } = null!;
-        public virtual Symptom Symptom { get; set; } = null!;
         public virtual UserProfile UserProfile { get; set; } = null!;
 
     }
